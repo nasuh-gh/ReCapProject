@@ -16,9 +16,24 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public void Add(Car car)
+        {
+            if (car.DailyPrice <= 0)
+            {
+                Console.WriteLine("\nAraba günlük fiyatı 0 TL'den büyük olmalıdır.");
+            }
+            else
+            {
+                Console.WriteLine(car.BrandId + " nolu marka araba sisteme eklendi");
+                _carDal.Add(car);
+            }
+            
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
         }
+
     }
 }
