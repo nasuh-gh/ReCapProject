@@ -10,27 +10,40 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //CarTestGetAllandAdd();
+
+            //BrandTestGetAllandAdd();
+
+            //ColorTestByColorId();
+
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll()) 
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine(car.Id + " - " + car.BrandId + " - " + car.ColorId + " - "
-                    + car.ModelYear + " - " + car.DailyPrice + " - " + car.Description);
+                Console.WriteLine(car.CarId + " - " + car.CarName + " - " + car.BrandName + " - "
+                    + car.ColorName + " - " + car.DailyPrice);
             }
 
-            //carManager.Add(new Car { 
-            //    BrandId = 2, 
-            //    ColorId = 3, 
-            //    ModelYear = "2020", 
-            //    DailyPrice = 1000, 
-            //    Description = "Sıfır Araba" 
-            //});
 
+        }
+
+        private static void ColorTestByColorId()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+            foreach (var color in colorManager.GetCarsByColorId(3))
+            {
+                Console.WriteLine("\n\n" + color.ColorName);
+            }
+        }
+
+        private static void BrandTestGetAllandAdd()
+        {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
             brandManager.Add(new Brand
             {
-                BrandName = "Nissan"
+                BrandName = "Murat 131"
             });
 
             Console.WriteLine("\nARABA MARKALARI");
@@ -42,16 +55,28 @@ namespace ConsoleUI
 
             foreach (var brand in brandManager.GetCarsByBrandId(2))
             {
-                Console.WriteLine("\n\n"+brand.BrandName);
+                Console.WriteLine("\n\n" + brand.BrandName);
             }
+        }
 
-            ColorManager colorManager=new ColorManager(new EfColorDal());
+        private static void CarTestGetAllandAdd()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var color in colorManager.GetCarsByColorId(3))
+            foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine("\n\n"+color.ColorName);
+                Console.WriteLine(car.Id + " - " + car.BrandId + " - " + car.ColorId + " - "
+                    + car.ModelYear + " - " + car.DailyPrice + " - " + car.Description);
             }
 
+            carManager.Add(new Car
+            {
+                BrandId = 2,
+                ColorId = 3,
+                ModelYear = "2020",
+                DailyPrice = 1000,
+                Description = "Sıfır Araba"
+            });
         }
     }
 }
