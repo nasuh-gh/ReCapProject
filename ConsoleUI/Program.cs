@@ -16,8 +16,28 @@ namespace ConsoleUI
 
             //ColorTestByColorId();
 
-            CarTestDetails();
+            //CarTestDetails();
 
+            GetAllRentalDetailList();
+
+        }
+
+        private static void GetAllRentalDetailList()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            //Console.WriteLine("Kiralanan Arabalar Listesi: \nId\tCar Name\tCustomer Name\tRent Date\tReturn Date");
+            foreach (var rental in rentalManager.GetRentalDetails().Data)
+            {
+                Console.WriteLine($"" +
+                    $"{rental.RentalId}\t" +
+                    $"{rental.CarName}\t" +
+                    $"{rental.CustomerName}\t" +
+                    $"{rental.RentDate}\t" +
+                    $"{rental.ReturnDate}");
+                //Console.WriteLine(rental.RentalId + " - " + rental.CarName + " - "
+                //    + rental.CustomerName + " - " + rental.RentDate + " - " + rental.ReturnDate);
+            }
         }
 
         private static void CarTestDetails()
