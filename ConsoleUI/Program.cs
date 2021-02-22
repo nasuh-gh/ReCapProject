@@ -18,8 +18,26 @@ namespace ConsoleUI
 
             //CarTestDetails();
 
-            GetAllRentalDetailList();
+            //GetAllRentalDetailList();
 
+            RentalAddTest();
+
+        }
+
+        private static void RentalAddTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            Rental rentalAdd=new Rental
+            {
+                CarId = 5,
+                CustomerId = 2,
+                RentDate = DateTime.Now,
+                //ReturnDate = DateTime.Now,
+                ReturnDate = null, //??????
+            };
+            Console.WriteLine(rentalManager.Add(rentalAdd).Message);
+            
         }
 
         private static void GetAllRentalDetailList()
