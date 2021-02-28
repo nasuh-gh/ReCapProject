@@ -11,6 +11,18 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfColorDal : EfEntityRepositoryBase<Color, ReCapDBContext>, IColorDal
     {
-       
+        public List<Color> GetAll()
+        {
+            using (ReCapDBContext context = new ReCapDBContext())
+            {
+                var result = from c in context.Colors
+                             select new Color
+                             {
+                                 ColorId = c.ColorId,
+                                 ColorName = c.ColorName
+                             };
+                return result.ToList();
+            }
+        }
     }
 }
