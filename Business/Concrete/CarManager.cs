@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,18 +24,13 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.DailyPrice <= 0)
-            {
-                //Console.WriteLine("\nAraba günlük fiyatı 0 TL'den büyük olmalıdır.");
-                return new ErrorResult(Messages.CarDailyPriceInValid);
-            }
-            else
-            {
-                //Console.WriteLine(car.BrandId + " nolu marka araba sisteme eklendi");
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
-            }
-            
+            ValidationTool.Validate(new CarValidator(), car);
+
+
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
+
+
         }
 
         public IResult Delete(Car car)
@@ -44,7 +41,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            
+
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
